@@ -29,7 +29,7 @@ function add(game, id ) {
       return {question: question[0], answer: question[1], games_id: id}})
     return db("questions")
       .insert(question)
-      .returning("game_id")
+      .returning("games_id")
       .then((ids) => ids);
   };
 
