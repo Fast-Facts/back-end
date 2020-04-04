@@ -1,34 +1,56 @@
 const express = require("express");
 require('dotenv').config()
+var cors = require('cors');
 
-const db = require('./database/posts')
+const db = require('./database/games.js')
 
 const app = express();
 
+app.use(cors())
+app.use(express.json())
+
 const port = process.env.PORT 
 
-app.post("/api", async (req,res) => {
+app.post("/", async (req,res) => {
+
+    // console.log(req.body)
+
     try{
         const game = req.body;
+        console.log(game)
 
-        const newGame = await db.insert(game)
-
-        res.status(201).json(newGame)
+        var newGame = await db.insert(game)
+        // console.log(game)
+        // res.status(201).json(newGame, newQuestions)
     }
 
     catch(error){
-        res.status(500).json({message: "Error creating game"})
+        // res.status(500).json({message: "Error creating game"})
+        console.log(error)
+    }
 
+    try{
+        const game = req.body;
+        const newQuestions = await db.add(game, newGame[0])
+        console.log(newQuestions)
+        res.status(201).json( newQuestions)
+    }
+
+    catch(err){
+        console.log(err)
+        res.status(500).json({message: "Error creating questions"})
     }
 })
 
-app.get("/api", async (req, res) => {
+app.get("/", async (req, res) => {
+    
     try{
         const games = await db.get()
-
+        console.log("hello")
         if(!games) {
             return res.status(404).json({message: "No games were found"})
         }
+        res.status(200).json(games)
     }
     catch(err){
         res.status(500).json({message: "Error retrieving games"})
