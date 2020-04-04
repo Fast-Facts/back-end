@@ -7,7 +7,7 @@ const app = express();
 
 const port = process.env.PORT 
 
-app.post("/", async (req,res) => {
+app.post("/api", async (req,res) => {
     try{
         const game = req.body;
 
@@ -22,7 +22,7 @@ app.post("/", async (req,res) => {
     }
 })
 
-app.get("/", async (req, res) => {
+app.get("/api", async (req, res) => {
     try{
         const games = await db.get()
 
