@@ -16,9 +16,11 @@ function insert(game) {
 //   console.log(newGame);
   return db("games")
     .insert(newGame)
+    .returning("id")
     .then((ids) => {
+      console.log(ids, "GAME SRTHSRTHSRTHSRTHSRTHSRHTID")
       return ids;
-    });
+    }); 
 }
 
 function add(game, id ) {
@@ -27,6 +29,7 @@ function add(game, id ) {
       return {question: question[0], answer: question[1], games_id: id}})
     return db("questions")
       .insert(question)
+      .returning("id")
       .then((ids) => ids);
   };
 
