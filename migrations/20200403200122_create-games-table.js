@@ -10,7 +10,7 @@ exports.up = function(knex) {
         questions.increments('id').primary();
         questions.integer('games_id').references('id').inTable('games').notNullable().onDelete('cascade')
         questions.string('question').notNullable()
-        questions.boolean('answer').notNullable()
+        questions.string('answer').notNullable()
     });
 };
 
