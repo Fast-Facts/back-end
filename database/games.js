@@ -4,10 +4,11 @@ module.exports = {
   get,
   insert,
   add,
+  getQuestions
 };
 
 function get() {
-  return db("games");
+  return db("games")
 }
 
 function insert(game) {
@@ -23,9 +24,15 @@ function insert(game) {
 function add(game, id) {
   console.log(game, id, "here");
   const question = game.questions.map((question) => {
-      return {question: question, games_id: id, answer: true}})
+      return {question: question[0], answer: question[1], games_id: id}})
     return db("questions")
       .insert(question)
       .then((ids) => ids);
   };
+
+function getQuestions(id){
+  console.log(id)
+  return db("questions")
+    .where("questions.games_id", id)
+}
 

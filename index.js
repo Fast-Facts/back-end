@@ -13,7 +13,7 @@ const port = process.env.PORT
 
 app.post("/", async (req,res) => {
 
-    // console.log(req.body)
+    console.log(req.body)
 
     try{
         const game = req.body;
@@ -33,7 +33,7 @@ app.post("/", async (req,res) => {
         const game = req.body;
         const newQuestions = await db.add(game, newGame[0])
         console.log(newQuestions)
-        res.status(201).json( newQuestions)
+        res.status(201).json(newGame)
     }
 
     catch(err){
@@ -53,10 +53,27 @@ app.get("/", async (req, res) => {
         res.status(200).json(games)
     }
     catch(err){
+        console.log(err)
         res.status(500).json({message: "Error retrieving games"})
     }
 }
 )
+
+app.get("/games/:id", async (req, res)=> {
+
+    console.log(req.params.id)
+
+    const id = req.params.id
+    
+    try{
+        games = await db.getQuestions(id)
+        res.status(200).json(games)
+    }
+
+    catch(err){
+        console.log(err)
+    }
+})
 
 app.listen(port, () => {
   console.log(`Server is listening on port: ${port}`);
