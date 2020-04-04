@@ -19,27 +19,17 @@ app.post("/", async (req,res) => {
         const game = req.body;
         console.log(game)
 
-        var newGame = await db.insert(game)
-        // console.log(game)
-        // res.status(201).json(newGame, newQuestions)
-    }
-
-    catch(error){
-        // res.status(500).json({message: "Error creating game"})
-        console.log(error)
-    }
-
-    try{
-        const game = req.body;
+        const newGame = await db.insert(game)
         const newQuestions = await db.add(game, newGame[0])
-        console.log(newQuestions)
+        // console.log(game)
         res.status(201).json(newGame)
     }
 
-    catch(err){
-        console.log(err)
-        res.status(500).json({message: "Error creating questions"})
+    catch(error){
+        res.status(500).json({message: "Error creating game"})
+        console.log(error)
     }
+
 })
 
 app.get("/", async (req, res) => {
@@ -64,6 +54,8 @@ app.get("/games/:id", async (req, res)=> {
     console.log(req.params.id)
 
     const id = req.params.id
+
+    console.log(id)
     
     try{
         games = await db.getQuestions(id)
