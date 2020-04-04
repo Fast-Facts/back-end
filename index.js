@@ -20,6 +20,7 @@ app.post("/", async (req,res) => {
         console.log(game)
 
         const newGame = await db.insert(game)
+        console.log(newGame)
         const newQuestions = await db.add(game, newGame[0])
         // console.log(game)
         res.status(201).json(newGame)

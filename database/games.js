@@ -21,7 +21,7 @@ function insert(game) {
     });
 }
 
-function add(game, id) {
+function add(game, id ) {
   console.log(game, id, "here");
   const question = game.questions.map((question) => {
       return {question: question[0], answer: question[1], games_id: id}})
